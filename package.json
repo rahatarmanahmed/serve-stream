@@ -1,7 +1,7 @@
 {
   "name": "serve-stream",
   "description": "Super simple HTTP server that just serves command output",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "license": "MIT",
   "main": "lib/index.js",
   "bin": {
@@ -10,7 +10,8 @@
   "author": "Raymond Hammarling",
   "repository": "https://github.com/raymond-h/serve-stream.git",
   "keywords": [
-    "http", "stream"
+    "http",
+    "stream"
   ],
   "scripts": {
     "lint": "eslint src/ test/",
