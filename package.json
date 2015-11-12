@@ -12,6 +12,7 @@
     "pretest": "npm run lint",
     "prebuild": "npm run test",
     "watch": "onchange src/ -- npm run build && echo Done",
+    "start": "babel-node src/",
     "dev": "npm run watch",
     "prepublish": "npm run build"
   },
@@ -23,5 +24,10 @@
     "eslint-config-kellyirc": "^3.1.0",
     "mocha": "^2.3.3",
     "onchange": "^2.0.0"
+  },
+  "dependencies": {
+    "express": "^4.13.3",
+    "morgan": "^1.6.1",
+    "subarg": "^1.0.0"
   }
 }
