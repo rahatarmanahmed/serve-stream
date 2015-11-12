@@ -4,6 +4,9 @@
   "version": "0.0.0",
   "license": "MIT",
   "main": "lib/index.js",
+  "bin": {
+    "serve-stream": "lib/index.js"
+  },
   "author": "Raymond Hammarling",
   "scripts": {
     "lint": "eslint src/ test/",
