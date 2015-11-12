@@ -8,6 +8,10 @@
     "serve-stream": "lib/index.js"
   },
   "author": "Raymond Hammarling",
+  "repository": "https://github.com/raymond-h/serve-stream.git",
+  "keywords": [
+    "http", "stream"
+  ],
   "scripts": {
     "lint": "eslint src/ test/",
     "test": "mocha --compilers js:babel/register,es6:babel/register,es6.js:babel/register test/",
