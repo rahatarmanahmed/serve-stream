@@ -1,7 +1,7 @@
 {
   "name": "serve-stream",
   "description": "Super simple HTTP server that just serves command output",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "license": "MIT",
   "main": "lib/index.js",
   "bin": {
