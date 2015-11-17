@@ -6,6 +6,8 @@ import express from 'express';
 import morgan from 'morgan';
 import subarg from 'subarg';
 
+import getCommandRunner from './command-runner';
+
 const args = subarg(process.argv.slice(2));
 
 const app = express();
@@ -16,7 +18,8 @@ for(const sub of args._) {
     const [path, cmd] = sub._;
 
     app.all(path, (req, res) => {
-        const proc = cp.spawn('sh', ['-c', cmd]);
+        const [runner, params] = getCommandRunner();
+        const proc = cp.spawn(runner, [...params, cmd]);
 
         req.pipe(proc.stdin);
         proc.stderr.pipe(process.stdout, { end: false });
