@@ -15,7 +15,7 @@ app.use(morgan());
 for(const sub of args._) {
     const [path, cmd] = sub._;
 
-    app.get(path, (req, res) => {
+    app.all(path, (req, res) => {
         const proc = cp.spawn('sh', ['-c', cmd]);
 
         req.pipe(proc.stdin);
