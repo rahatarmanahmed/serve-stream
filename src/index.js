@@ -8,7 +8,14 @@ import subarg from 'subarg';
 
 import getCommandRunner from './command-runner';
 
-const args = subarg(process.argv.slice(2));
+const args = subarg(process.argv.slice(2), {
+    alias: {
+        port: 'p'
+    },
+    default: {
+        port: 8080
+    }
+});
 
 const app = express();
 
@@ -27,4 +34,4 @@ for(const sub of args._) {
     });
 }
 
-app.listen(8080);
+app.listen(args.port);
