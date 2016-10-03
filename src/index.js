@@ -8,6 +8,14 @@ import subarg from 'subarg';
 
 import getCommandRunner from './command-runner';
 
+function mapKeys(obj, fn) {
+    const out = {};
+    for(const k in obj) {
+        out[fn(k)] = obj[k];
+    }
+    return out;
+}
+
 const args = subarg(process.argv.slice(2), {
     alias: {
         port: 'p'
@@ -26,7 +34,13 @@ for(const sub of args._) {
 
     app.all(path, (req, res) => {
         const [runner, params] = getCommandRunner();
-        const proc = cp.spawn(runner, [...params, cmd]);
+        const proc = cp.spawn(runner, [...params, cmd], {
+            env: {
+                ...process.env,
+                ...mapKeys(req.params, k => 'serve_param_' + k),
+                ...mapKeys(req.query, k => 'serve_query_' + k)
+            }
+        });
 
         req.pipe(proc.stdin);
         proc.stderr.pipe(process.stdout, { end: false });
