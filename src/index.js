@@ -18,8 +18,11 @@ function mapKeys(obj, fn) {
 
 const args = subarg(process.argv.slice(2), {
     alias: {
-        port: 'p'
+        port: 'p',
+        command: 'c',
+        commandArgument: 'a'
     },
+    string: ['command', 'commandArgument'],
     default: {
         port: 8080
     }
@@ -33,7 +36,7 @@ for(const sub of args._) {
     const [path, cmd] = sub._;
 
     app.all(path, (req, res) => {
-        const [runner, params] = getCommandRunner();
+        const [runner, params] = getCommandRunner(args);
         const proc = cp.spawn(runner, [...params, cmd], {
             env: {
                 ...process.env,
@@ -45,6 +48,8 @@ for(const sub of args._) {
         req.pipe(proc.stdin);
         proc.stderr.pipe(process.stdout, { end: false });
         proc.stdout.pipe(res);
+
+        proc.on('error', console.error);
     });
 }
 
