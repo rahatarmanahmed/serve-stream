@@ -2,13 +2,39 @@
 Super simple HTTP server that just serves command output
 
 ## Installing
-`npm install serve-stream`
+`npm install -g serve-stream` (or just use [`npx`](https://github.com/zkat/npx), also included with npm 5.2.0+)
 
 ## Example usage
-```js
-var serve-stream = require('serve-stream');
+```sh
+serve-stream \
+	[ "/one/path/here" "echo Whatever command to run here!" ] \
+	[ "/some/other/path" "fortune | cowsay" ] \
+	[ "/lowercase" "tr 'A-Z' 'a-z'" ]
 
-// Do whatever you want with 'serve-stream'!
+### in another terminal
+# the command is run, and the stdout of the command
+# is given as response body
+curl http://localhost:8080/one/path/here
+# -> Whatever command to run here!
+
+# the command is fed into /bin/sh on Unix-like systems,
+# and cmd.exe on Windows systems (mirrors child_process's 'exec' function)
+curl http://localhost:8080/some/other/path
+# ->  _______________________________________
+# -> / Tomorrow, this will be part of the    \
+# -> | unchangeable past but fortunately, it |
+# -> \ can still be changed today.           /
+# ->  ---------------------------------------
+# ->         \   ^__^
+# ->          \  (oo)\_______
+# ->             (__)\       )\/\
+# ->                 ||----w |
+# ->                 ||     ||
+
+# supports POST (and other methods with bodies)
+# the body is fed in as stdin to the command
+echo HELLO WORLD | curl -d @- http://localhost:8080/lowercase
+# -> hello world
 ```
     
 ## License
